@@ -24,7 +24,8 @@
   <div class="col-md-3">
       <div class="col-md-12 settingTitle">Settings fields</div>
       <div>
-          <a (click)="onAddNewPerson(name, number, town)" class="col-md-3 settingBtn">Add</a>
+          <a *ngIf="person != null"  (click)="onAddNewPerson(person.name, person.number, person.town)" class="col-md-3 settingBtn">Add</a>
+          <a *ngIf="person == null"  (click)="onAddNewPerson(name, number, town)" class="col-md-3 settingBtn">Add</a>
           <a (click)="onNoSelect()" class="col-md-4 settingBtn">Clear</a>
       </div>
     </div>  
