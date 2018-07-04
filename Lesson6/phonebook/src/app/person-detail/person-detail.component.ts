@@ -13,6 +13,7 @@ import { Location } from '@angular/common'
 export class PersonDetailComponent implements OnInit {
 
   person: Person;
+  errors: string[] = [];
 
   constructor(
      private contactService: ContactService,
@@ -25,21 +26,25 @@ export class PersonDetailComponent implements OnInit {
 
   loadContact() {
     const id = +this.activatedRoute.snapshot.paramMap.get('id');
-    this.person = id ? this.contactService.getContact(id) : new Person();
+    this.contactService.getContact(id).subscribe(contact => this.person = contact);
   }
 
-  onAddNewPerson() {
-    this.contactService.AddPerson(this.person.name, this.person.number, this.person.town);
-  }
-
-  onRemoveSelect(contact: Person) {
-    this.contactService.RemovePerson(contact);
+  onRemoveSelect() {
+    this.contactService.RemovePerson(this.person)
+    .subscribe(() => this.goBack());
   }
     
   onNoSelect() {
     this.person.name = null;
-    this.person.number = null;
+    this.person.phone = null;
     this.person.town = null;
+  }
+
+  save() {
+    this.contactService.updateContact(this.person)
+    .subscribe(() => this.goBack(), errors => {
+      this.errors = errors.messages;
+    });
   }
 
   goBack() {

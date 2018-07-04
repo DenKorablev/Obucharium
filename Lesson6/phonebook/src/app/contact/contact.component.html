@@ -8,7 +8,7 @@
     </tr>
   </thead>
   <tbody>
-      <tr *ngFor = "let person of loadContact()">
+      <tr *ngFor = "let person of people">
           <th scope=row>
             {{person.id}}
           </th> 
@@ -16,7 +16,7 @@
             {{person.name}}
           </td>
           <td>
-            {{person.number}}
+            {{person.phone}}
           </td>
           <td>
             {{person.town}}

@@ -8,6 +8,8 @@ import { PersonDetailComponent } from './person-detail/person-detail.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AboutComponent } from './about/about.component';
+import { SearchComponent } from './search/search.component';
+import { AddContactComponent } from './add-contact/add-contact.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { AboutComponent } from './about/about.component';
     PersonDetailComponent,
     PageNotFoundComponent,
     AboutComponent,
+    SearchComponent,
+    AddContactComponent,
   ],
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, HttpClientModule

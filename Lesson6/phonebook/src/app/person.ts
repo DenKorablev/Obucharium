@@ -1,6 +1,6 @@
 export class Person {
     id: number;
     name: string;
-    number: string;
+    phone: string;
     town: string;
 }
