@@ -1,60 +1,76 @@
 <h2>Edit</h2>
 <div class='form-horizontal' *ngIf = "person">
 
+  <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label class="control-label col-md-2" for="Name">Name</label>
+      <div class="col-md-10">
+          <input formControlName = "name" required class="form-control text-box single-line inData" id="name" name="Name" placeholder = "name" type = "text">
+          <span class="text-danger field-validation-error" [hidden]="form.get('name').untouched || form.get('name').valid">
+            <span for="Name" class="">
+              The Name field required
+            </span>
+          </span>    
+      </div> 
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-2" for="Phone">Phone</label>
+      <div class="col-md-10">
+        <input formControlName = "phone" required class="form-control text-box single-line inData" id="phone" name="Phone" placeholder = "phone" type = "text">
+        <span class="text-danger field-validation-error" [hidden]="form.get('phone').untouched || !form.get('phone').errors?.phoneValidator">
+            <span for="Phone" class="">
+              The Phone field required
+            </span>
+        </span>
+        <span class="text-danger field-validation-error" [hidden]="form.get('phone').untouched || !form.get('phone').errors?.required">
+          <span for="Phone" class="">
+            The Phone field invalid
+          </span>
+      </span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-md-2" for="Town">Town</label>
+      <div class="col-md-10">
+        <input  formControlName = "town" required class="form-control text-box single-line inData" id="town" name="Town" placeholder = "town" type = "text">
+        <span class="text-danger field-validation-error" [hidden]="form.get('town').untouched || form.get('town').valid">
+            <span for="Town" class="">
+              The Town field required
+            </span>
+          </span>
+      </div>
+    </div>
+ 
+    <div class="form-group">
+        <label class="control-label col-md-2" for="Group">Group</label>
+        <div class="col-md-10">   
+          <select  class="form-control" formControlName="groups" id="Group" name="Group">
+            <option *ngFor="let group of groups" [ngValue]="group">{{group.name}}</option>
+          </select>  
+      </div>
+    </div>
+
     <div class="validation-summary-errors text-danger" *ngIf="errors.length">
       <ul *ngFor="let error of errors">
         <li>{{error}}</li>
       </ul>
     </div>
-
-      <div class="form-group">
-        <label class="control-label col-md-2" for="Name">Name</label>
-        <div class="col-md-10">
-            <input #nameBox="ngModel" required class="form-control text-box single-line inData" id="name" name="Name" [(ngModel)] = person.name  placeholder = "name" type = "text">
-            <span class="text-danger field-validation-error" [hidden]="nameBox.valid || nameBox.untouched">
-              <span for="Name" class="">
-                The Name field required
-              </span>
-            </span>    
-        </div> 
+    
+    <div class="form-group">
+      <div class="col-md-6 col-md-offset-1">
+        <button type="submit" [disabled]="form.invalid" class="col-md-2 col-md-offset-1 settingBtn">Add</button>
       </div>
+    </div>
 
-      <div class="form-group">
-        <label class="control-label col-md-2" for="Phone">Phone</label>
-        <div class="col-md-10">
-          <input #phoneBox="ngModel" required class="form-control text-box single-line inData" id="phone" name="Phone" [(ngModel)] = person.phone placeholder = "phone" type = "text">
-          <span class="text-danger field-validation-error" [hidden]="phoneBox.valid || phoneBox.untouched">
-              <span for="Phone" class="">
-                The Phone field required
-              </span>
-          </span>
-        </div>
+    <div class="form-group">
+      <div class="col-md-10">
+        <a href="javascript:void(0)" (click)="goBack()" class="col-md-3 settingBtn">Back to contact</a>
       </div>
-
-      <div class="form-group">
-        <label class="control-label col-md-2" for="Town">Town</label>
-        <div class="col-md-10">
-          <input #townBox="ngModel" required class="form-control text-box single-line inData" id="town" name="Town" [(ngModel)] = person.town placeholder = "town" type = "text">
-          <span class="text-danger field-validation-error" [hidden]="townBox.valid || townBox.untouched">
-              <span for="Town" class="">
-                The Town field required
-              </span>
-            </span>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-md-6 col-md-offset-1">
-          <button (click)="AddPerson(person)" class="col-md-2 col-md-offset-1 settingBtn">Add</button>
-            <button (click)="onNoSelect()" class="col-md-2 col-md-offset-1 settingBtn">Clear</button>
-        </div>
-      </div>
-
-      <div class="form-group">
-          <div class="col-md-10">
-            <a href="javascript:void(0)" (click)="goBack()" class="col-md-3 settingBtn">Back to contact</a>
-          </div>
-        </div>
+    </div>
+  </form>
+</div>
   
 
 

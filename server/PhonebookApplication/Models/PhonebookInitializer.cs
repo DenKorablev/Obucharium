@@ -7,7 +7,7 @@ using System.Web;
 namespace PhonebookApplication.Models
 {
 
-    public class PhonebookInitializer : DropCreateDatabaseIfModelChanges<PhonebookDB>
+    public class PhonebookInitializer : DropCreateDatabaseAlways<PhonebookDB>
     {
         public readonly string[] names =
         {

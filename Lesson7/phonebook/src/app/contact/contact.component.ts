@@ -3,7 +3,8 @@ import { Person } from '../person';
 import { ContactService } from '../contact.service';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap, finalize } from 'rxjs/operators';
+import { MAX_LENGTH_VALIDATOR } from '@angular/forms/src/directives/validators';
 
 @Component({
   selector: 'app-contact',
@@ -15,12 +16,16 @@ export class ContactComponent implements OnInit {
   person: Person[];
   people: Observable<Person[]>;
   errors: string[] = [];
+  isLoading: boolean = false;
 
   constructor(private contactService: ContactService, private activeRoute: ActivatedRoute) { }
 
   ngOnInit() {
     this.people = this.activeRoute.params
-    .pipe(switchMap(params => this.getContacts(params['term'])));
+    .pipe(
+      tap(() => this.isLoading = true),
+      switchMap(params => this.getContacts(params['term'])
+      .pipe(finalize(() => this.isLoading = false))));
     }
 
     getContacts(term: string): Observable<Person[]> {
@@ -30,11 +35,15 @@ export class ContactComponent implements OnInit {
         return this.contactService.getContacts();
       }
     }
+    onRemoveSelect(person: number) {
+      this.contactService.RemovePerson(person).subscribe(contact => {
+        this.people = this.people.pipe(
+            tap(persons => {
 
-    onRemoveSelect(person: Person) {
-        this.contactService.RemovePerson(person).subscribe(contact => {
-          let cont = this.person.findIndex(c => c == person);
-          this.person.splice(cont, 1);
-        });
-      }
+              let idx = persons.findIndex(c => c.id === contact.id);      
+              persons.splice(idx, 1);   
+            })
+          ); 
+      });
+    }
 }

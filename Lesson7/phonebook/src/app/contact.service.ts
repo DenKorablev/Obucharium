@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Person } from './person';
-import { Contacts } from './fake-contacts';
 import { LoggerService } from './logger.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, of } from 'rxjs';
@@ -69,7 +68,7 @@ export class ContactService {
     catchError(this.handlerUpdateError()));
   }
 
-  RemovePerson(contact: Person): Observable<any>  {
+  RemovePerson(contact): Observable<any>  {
       return this.http.delete(`${this.contactsUrl}/${contact.id}`);
     }
 }
