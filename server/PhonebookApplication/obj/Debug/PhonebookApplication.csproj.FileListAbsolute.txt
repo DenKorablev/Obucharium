@@ -427,3 +427,4 @@ c:\Programmer\Obucharium\server\PhonebookApplication\obj\Debug\PhonebookApplicat
 c:\Programmer\Obucharium\server\PhonebookApplication\obj\Debug\PhonebookApplication.csproj.CopyComplete
 c:\Programmer\Obucharium\server\PhonebookApplication\obj\Debug\PhonebookApplication.dll
 c:\Programmer\Obucharium\server\PhonebookApplication\obj\Debug\PhonebookApplication.pdb
+C:\Programmer\Obucharium\server\PhonebookApplication\obj\Debug\PhonebookApplication.csprojResolveAssemblyReference.cache

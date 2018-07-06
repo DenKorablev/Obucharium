@@ -38,7 +38,7 @@ export class ContactComponent implements OnInit {
 
     onRemoveSelect(person: number) {
       this.contactService.RemovePerson(person).subscribe(people => 
-        this.people = this.people.pipe(tap(() => this.people)
+        this.people = this.people.pipe(tap(people)
           ));
     }
 }
