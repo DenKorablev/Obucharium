@@ -35,15 +35,10 @@ export class ContactComponent implements OnInit {
         return this.contactService.getContacts();
       }
     }
-    onRemoveSelect(person: number) {
-      this.contactService.RemovePerson(person).subscribe(contact => {
-        this.people = this.people.pipe(
-            tap(persons => {
 
-              let idx = persons.findIndex(c => c.id === contact.id);      
-              persons.splice(idx, 1);   
-            })
-          ); 
-      });
+    onRemoveSelect(person: number) {
+      this.contactService.RemovePerson(person).subscribe(people => 
+        this.people = this.people.pipe(tap(() => this.people)
+          ));
     }
 }
