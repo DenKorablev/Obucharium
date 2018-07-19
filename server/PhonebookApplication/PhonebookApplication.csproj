@@ -201,6 +201,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\PhonebookDB.cs" />
     <Compile Include="Models\PhonebookInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -10,6 +10,8 @@ namespace PhonebookApplication.Models
     {
         public DbSet<Contact> Contacts { get; set; }
 
+        public DbSet<Group> Group { get; set; }
+
         static PhonebookDB()
         {
             Database.SetInitializer<PhonebookDB>(new PhonebookInitializer());

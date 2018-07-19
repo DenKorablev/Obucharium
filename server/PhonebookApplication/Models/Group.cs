@@ -7,7 +7,7 @@ using System.Web;
 
 namespace PhonebookApplication.Models
 {
-    public class Contact
+    public class Group
     {
         [JsonProperty("id")]
         public int Id { get; set; }
@@ -15,18 +15,5 @@ namespace PhonebookApplication.Models
         [JsonProperty("name")]
         [Required]
         public string Name { get; set; }
-
-        [JsonProperty("phone")]
-        [Required]
-        [RegularExpression("\\d+")]
-        public string Phone { get; set; }
-
-        [JsonProperty("town")]
-        [Required]
-        public string Town { get; set; }
-
-        [JsonProperty("group_id")]
-        [Required]
-        public int? GroupID { get; set; }
     }
 }

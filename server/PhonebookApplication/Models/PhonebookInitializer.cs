@@ -29,8 +29,20 @@ namespace PhonebookApplication.Models
             "Tokyo",
         };
 
+        public readonly string[] groups_name =
+        {
+            "Family",
+            "Hobby",
+            "Work",
+            "Friends",
+        };
+
         protected override void Seed(PhonebookDB context)
         {
+            Random random_number = new Random();
+            var groups = groups_name.Select((gr_name, id) => new Group { Name = gr_name, Id = id });
+            context.Group.AddRange(groups);
+
             for (var i = 0; i < names.Length; i++)
             {
                 context.Contacts.Add(new Contact
@@ -38,6 +50,7 @@ namespace PhonebookApplication.Models
                     Name = names[i],
                     Phone = Math.Abs((int)names[i].GetHashCode()).ToString().Substring(0, 6).PadRight(6, '0'),
                     Town = towns[i],
+                    GroupID = groups.FirstOrDefault(g => g.Id == random_number.Next(1, 5))?.Id
                 });
             }
             base.Seed(context);
