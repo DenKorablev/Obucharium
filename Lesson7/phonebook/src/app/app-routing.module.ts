@@ -6,6 +6,7 @@ import { PersonDetailComponent } from './person-detail/person-detail.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AboutComponent } from './about/about.component';
 import { AddContactComponent } from './add-contact/add-contact.component';
+import { GroupsComponent } from './groups/groups.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/contacts', pathMatch: 'full' },
@@ -14,8 +15,11 @@ const routes: Routes = [
   { path: 'detail/:id', component: PersonDetailComponent },
   { path: 'add', component: AddContactComponent },
   { path: 'about', component: AboutComponent },
+  { path: 'groups', component: GroupsComponent },
+  { path: 'groups/:term', component: GroupsComponent },
   { path: '404', component: PageNotFoundComponent },
   { path: '**', redirectTo: '404', pathMatch: 'full' },
+
 ];
 
 @NgModule({

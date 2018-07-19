@@ -12,6 +12,7 @@ import { AboutComponent } from './about/about.component';
 import { SearchComponent } from './search/search.component';
 import { AddContactComponent } from './add-contact/add-contact.component';
 import { NumberPipe } from './number.pipe';
+import { GroupsComponent } from './groups/groups.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { NumberPipe } from './number.pipe';
     SearchComponent,
     AddContactComponent,
     NumberPipe,
+    GroupsComponent,
   ],
   imports: [
     BrowserModule, FormsModule, AppRoutingModule, HttpClientModule, ReactiveFormsModule

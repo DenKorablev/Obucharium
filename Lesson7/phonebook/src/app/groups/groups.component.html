@@ -1,0 +1,31 @@
+<div class="page-header">
+    <h1>
+      Groups
+      <small>list</small>
+    </h1>
+  </div>
+  <span [hidden]=!isLoading>Loading...</span>
+  <table class="table table-hover">
+    <thead>
+      <th>#</th>
+      <th>Name</th>
+      <th>
+        <a routerLink="/groupadd">Add</a>
+      </th>
+      <th></th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let group of groups | async">
+        <th scope=row>{{group.id}}</th>
+        <td>
+          {{group.name}}
+        </td>
+        <td>
+          <a routerLink="/groupdetail/{{group.id}}">Edit</a>
+        </td>
+        <td>
+          <a href="javascript:void(0)" (click)=delete(group.id)>Delete</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>

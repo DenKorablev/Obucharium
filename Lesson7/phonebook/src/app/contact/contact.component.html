@@ -22,6 +22,9 @@
           <td>
             {{person.town}}
           </td>
+          <td>
+            {{contact.group}}
+          </td>
           <td class='col-md-1'>
               <a routerLink="/detail/{{person.id}}" class="col-md-6 settingBtn settingTitle">Edit</a>
               <span (click)="onRemoveSelect(person)" class="col-md-6 close"></span>
