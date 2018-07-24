@@ -1,5 +1,5 @@
-<h2>Edit</h2>
-<div class='form-horizontal' *ngIf = "person">
+<h2>Add person</h2>
+<div class='form-horizontal'>
 
   <form novalidate [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="form-group">
@@ -18,12 +18,12 @@
       <label class="control-label col-md-2" for="Phone">Phone</label>
       <div class="col-md-10">
         <input formControlName = "phone" required class="form-control text-box single-line inData" id="phone" name="Phone" placeholder = "phone" type = "text">
-        <span class="text-danger field-validation-error" [hidden]="form.get('phone').untouched || !form.get('phone').errors?.phoneValidator">
+        <span class="text-danger field-validation-error" [hidden]="form.get('phone').pristine || !form.get('phone').errors?.required">
             <span for="Phone" class="">
               The Phone field required
             </span>
         </span>
-        <span class="text-danger field-validation-error" [hidden]="form.get('phone').untouched || !form.get('phone').errors?.required">
+        <span class="text-danger field-validation-error" [hidden]="form.get('phone').pristine || !form.get('phone').errors?.phoneValidator">
           <span for="Phone" class="">
             The Phone field invalid
           </span>
@@ -47,7 +47,7 @@
         <label class="control-label col-md-2" for="Group">Group</label>
         <div class="col-md-10">   
           <select  class="form-control" formControlName="groups" id="Group" name="Group">
-            <option *ngFor="let gr of group" [ngValue]="group" [selected]="group.id === selectedGroup.id">{{group.name}}</option>
+            <option *ngFor="let group of groups" [ngValue]="group">{{group.name}}</option>
           </select>  
       </div>
     </div>

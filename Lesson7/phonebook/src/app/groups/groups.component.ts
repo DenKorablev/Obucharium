@@ -47,4 +47,19 @@ export class GroupsComponent implements OnInit {
     }
     return getGroups;
   }
+
+  onRemoveGroup(group) {
+    this.groupService.RemoveGroup(group).
+      subscribe(contacts => {
+        this.groups = this.groups.pipe(
+          tap(contact => {
+            let x = contact.find(c => c.id === contacts.id);
+            const index = contact.indexOf(x);
+            if (index > -1) {
+              contact.splice(index, 1);
+            }
+          })
+        );
+      });
+  }
 }

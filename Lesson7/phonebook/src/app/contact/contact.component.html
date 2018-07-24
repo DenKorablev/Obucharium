@@ -6,6 +6,7 @@
         <th>Name</th>
         <th>Phone</th>
         <th>Town</th>
+        <th>Group</th>
     </tr>
   </thead>
   <tbody>
@@ -17,13 +18,13 @@
             {{person.name}}
           </td>
           <td>
-            {{person.phone | number}}
+            {{person.phone}}
           </td>
           <td>
             {{person.town}}
           </td>
           <td>
-            {{contact.group}}
+            {{person.groupName}}
           </td>
           <td class='col-md-1'>
               <a routerLink="/detail/{{person.id}}" class="col-md-6 settingBtn settingTitle">Edit</a>

@@ -4,7 +4,10 @@ import { ContactService } from '../contact.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common'
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, forkJoin } from 'rxjs';
+import { Group } from '../group';
+import { GroupService } from '../group.service';
+import { PersonVm } from '../personVm';
 
 @Component({
   selector: 'app-person-detail',
@@ -16,47 +19,73 @@ export class PersonDetailComponent implements OnInit {
 
     errors: string[] = [];
     contactId: number;
-    contacts: Observable<Person[]>;
+    groups: Group[] = [];
+    selectedGroup: Group;
 
     form = new FormGroup({
       name: new FormControl('', Validators.required),
       phone: new FormControl('', [Validators.required, this.phoneValidator]),
-      town: new FormControl('', Validators.required)
+      town: new FormControl('', Validators.required),
+      groupsSelect: new FormControl('')
     });
 
    constructor(
      private contactService: ContactService,
+     private groupService: GroupService,
      private activatedRoute: ActivatedRoute,
      private location: Location,
      private router: Router) { }
 
+
     ngOnInit() {
       this.loadContact();
     }
-
+  
     loadContact() {
       const id = +this.activatedRoute.snapshot.paramMap.get('id');
-      this.contactService.getContact(id).subscribe(contact =>
-        this.setContact(contact),
-        error => this.router.navigate(['404'])
-      );
+  
+      this.contactService.getContact(id)
+        .subscribe(contact => {
+          if (contact === undefined) {
+            this.router.navigate(['404']);
+          } else {
+            this.groupService.getGroups().subscribe(groups => {
+              let groupsModel = [{
+                id: -1,
+                name: 'Not selected'
+              }];
+              groupsModel = groupsModel.concat(groups);
+              let selectedGroup = groupsModel[0];
+  
+              let gn = '';
+              if (contact.groupId) {
+                const group = groupsModel.find(g => g.id === contact.groupId);
+                if (group) {
+                  gn = group.name;
+                  selectedGroup = group;
+                }
+              }
+  
+              this.setContact(PersonVm.PersonCreater(contact, gn), groupsModel, selectedGroup);
+            }
+  
+            );
+          }
+        },
+          error => this.router.navigate(['404'])
+        );
     }
-
-    setContact(contact: Person) {
-      this.contactId = contact.id
+  
+    setContact(contact: PersonVm, groups: Group[], selectedGroup: Group) {
+      this.contactId = contact.id;
+      this.groups = groups;
+      this.selectedGroup = selectedGroup;
       this.form.setValue({
         name: contact.name,
         phone: contact.phone,
         town: contact.town,
-        group: contact.group
+        groupsSelect: this.selectedGroup
       })
-    }
-
-    save(contact: Person) {
-      this.contactService.updateContact(contact)
-      .subscribe(() => this.goBack(), errors => {
-        this.errors = errors.messages;
-      });
     }
 
     goBack() {
@@ -70,10 +99,12 @@ export class PersonDetailComponent implements OnInit {
       name: model.name,
       phone: model.phone,
       town: model.town,
-      group: model.group
+      groupId: model.groupsSelect.id === -1 ? null : model.groupsSelect.id
     }
-
-    this.save(contact);
+    this.contactService.updateContact(contact)
+    .subscribe(() => this.goBack(), errors => {
+      this.errors = errors.messages;
+    });
   }
 
   phoneValidator(control: FormControl): {[s: string]: boolean} {

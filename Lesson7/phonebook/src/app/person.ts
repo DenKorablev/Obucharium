@@ -3,5 +3,6 @@ export class Person {
     name: string;
     phone: string;
     town: string;
-    group: string;
+    groupId: number;
+
 }

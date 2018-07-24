@@ -9,8 +9,7 @@ namespace PhonebookApplication.Models
     public class PhonebookDB : DbContext
     {
         public DbSet<Contact> Contacts { get; set; }
-
-        public DbSet<Group> Group { get; set; }
+        public DbSet<PersonGroup> Groups { get; set; }
 
         static PhonebookDB()
         {

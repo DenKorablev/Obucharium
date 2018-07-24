@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { LoggerService } from './logger.service';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, catchError } from 'rxjs/operators';
 import { Group } from './group';
-
 
 @Injectable({
   providedIn: 'root'
 })
 export class GroupService {
 
-  private apiBaseUrl = 'http://localhost:17023/api/groups';
+  private groupUrl= 'http://localhost:50822/api/PersonGroups';
 
   constructor(
     private logger: LoggerService,
@@ -19,58 +18,32 @@ export class GroupService {
   ) { }
 
   getGroups(): Observable<Group[]> {
-    return this.http.get<Group[]>(`${this.apiBaseUrl}`)
-      .pipe(
-        tap(groups =>
-          this.logger.debug(`groups are loaded. Count: ${groups.length}.`)
-        ),
-      );
+    return this.http.get<Group[]>(`${this.groupUrl}`)
+      .pipe(tap(groups => this.logger.debug(`get groups`)));
   }
 
   serachGroups(term: string): Observable<Group[]> {
-    return this.http.get<Group[]>(`${this.apiBaseUrl}?term=${term}`)
-      .pipe(
-        tap(groups =>
-          this.logger.debug(`search groups. Found: ${groups.length}.`)
-        ),
-      );
+    return this.http.get<Group[]>(`${this.groupUrl}?term=${term}`)
+    .pipe(tap(groups => this.logger.debug(`search groups`)));
   }
 
   getGroup(id: number): Observable<Group> {
-    return this.http.get<Group>(`${this.apiBaseUrl}/${id}`)
-      .pipe(
-        tap(_ =>
-          this.logger.debug(`group is loaded. id: ${id}`)
-        ),
-      );
+    return this.http.get<Group>(`${this.groupUrl}/${id}`)
+      .pipe(tap(_ => this.logger.debug(`group is loaded. id: ${id}`)));
   }
 
   updateGroup(group: Group): Observable<Object> {
-    return this.http.put(`${this.apiBaseUrl}/${group.id}`, group)
-      .pipe(
-        tap(_ =>
-          this.logger.debug(`group is updated. id: ${group.id}`)
-        ),
-      );
+    return this.http.put(`${this.groupUrl}/${group.id}`, group)
+      .pipe(tap(_ => this.logger.debug(`group is updated`)));
+  }
+  
+  RemoveGroup(group): Observable<any>  {
+    return this.http.delete(`${this.groupUrl}/${group.id}`)
+    .pipe(tap(_ => this.logger.debug(`group is updated`)));
   }
 
-  createGroup(group: Group): Observable<any> {
-    return this.http.post(`${this.apiBaseUrl}/${group.id}`, group)
-      .pipe(
-        tap(_ =>
-          this.logger.debug(`group is created. id: ${group.id}`)
-        ),
-      );
+  AddGroup(group): Observable<any>  {
+    return this.http.post(`${this.groupUrl}/${group.id}`, group)
+    .pipe(tap(_ =>this.logger.debug(`add contact id=${group.id}`)));
   }
-
-  deleteGroup(groupId: number): Observable<Object> {
-    return this.http.delete(`${this.apiBaseUrl}/${groupId}`)
-    .pipe(
-      tap(_ =>
-        this.logger.debug(`group is deleted. id: ${groupId}`)
-      ),
-    );
-  }
-
-
 }

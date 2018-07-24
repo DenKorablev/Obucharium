@@ -61,8 +61,7 @@ export class ContactService {
     }
   }
 
-  AddPerson(contact): Observable<any>  {
-    contact.id;
+  AddPerson(contact: Person): Observable<any>  {
     return this.http.post(`${this.contactsUrl}/${contact.id}`, contact)
     .pipe(tap(_ =>this.logger.debug(`add contact id=${contact.id}`)),
     catchError(this.handlerUpdateError()));

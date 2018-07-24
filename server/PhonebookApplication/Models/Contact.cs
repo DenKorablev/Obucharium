@@ -25,8 +25,7 @@ namespace PhonebookApplication.Models
         [Required]
         public string Town { get; set; }
 
-        [JsonProperty("group_id")]
-        [Required]
+        [JsonProperty("groupId")]
         public int? GroupID { get; set; }
     }
 }
