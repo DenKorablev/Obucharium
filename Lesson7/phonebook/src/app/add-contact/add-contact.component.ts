@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { Person } from '../person';
 import { ContactService } from '../contact.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Location } from '@angular/common'
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Group } from '../group';
@@ -18,7 +18,7 @@ export class AddContactComponent implements OnInit {
 
   contactId: number;
   groups: Group[] = [];
-  selectGroup: Group;
+  selectedGroup: Group;
   errors: string[] = [];
 
   form = new FormGroup({
@@ -31,7 +31,6 @@ export class AddContactComponent implements OnInit {
   constructor(
     private contactService: ContactService,
     private groupService: GroupService,
-    private activatedRoute: ActivatedRoute,
     private location: Location,
     private router: Router
   ) { }
@@ -64,12 +63,12 @@ export class AddContactComponent implements OnInit {
   setContact(contact: PersonVm, groups: Group[], selectedGroup: Group) {
     this.contactId = contact.id;
     this.groups = groups;
-    this.selectGroup = selectedGroup;
+    this.selectedGroup = selectedGroup;
     this.form.setValue({
       name: contact.name,
       phone: contact.phone,
       town: contact.town,
-      groupsSelect: this.selectGroup
+      groupsSelect: this.selectedGroup
     });
   }
 
