@@ -46,7 +46,7 @@
     <div class="form-group">
         <label class="control-label col-md-2" for="Group">Group</label>
         <div class="col-md-10">   
-          <select  class="form-control" formControlName="groups" id="Group" name="Group">
+          <select  class="form-control" formControlName="groupsSelect" id="Group" name="Group">
             <option *ngFor="let group of groups" [ngValue]="group" [selected]="group.id === selectedGroup.id">{{group.name}}</option>
           </select>  
       </div>

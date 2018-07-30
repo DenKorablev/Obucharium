@@ -17,7 +17,7 @@ import { PersonVm } from '../personVm';
 export class AddContactComponent implements OnInit {
 
   contactId: number;
-  groups: Group[] = [];
+  groups: Group[];
   selectedGroup: Group;
   errors: string[] = [];
 
@@ -46,7 +46,6 @@ export class AddContactComponent implements OnInit {
           name: 'Not selected'
         }];
         groupsModel = groupsModel.concat(groups);
-        let selectedGroup = groupsModel[0];
         const newPerson: Person = {
           id: 0,
           name: '',
@@ -54,20 +53,19 @@ export class AddContactComponent implements OnInit {
           town: '',
           groupId: -1
         };
-
         this.setContact(PersonVm.PersonCreater(newPerson, ''), groupsModel, groupsModel[0]);
       }
     );
   }
 
-  setContact(contact: PersonVm, groups: Group[], selectedGroup: Group) {
-    this.contactId = contact.id;
+  setContact(person: PersonVm, groups: Group[], selectedGroup: Group) {
+    this.contactId = person.id;
     this.groups = groups;
     this.selectedGroup = selectedGroup;
     this.form.setValue({
-      name: contact.name,
-      phone: contact.phone,
-      town: contact.town,
+      name: person.name,
+      phone: person.phone,
+      town: person.town,
       groupsSelect: this.selectedGroup
     });
   }
